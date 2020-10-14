@@ -1,0 +1,78 @@
+.input-button-cont {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-cont {
+  margin-left: 20px;
+}
+
+.mat-card {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+.single-todo {
+  padding: 15px 5px;
+  display: flex;
+  flex-direction: column;
+  min-height: 30px;
+  justify-content: space-between;
+
+  .action-cont, .time-stamp-cont {
+    display: none;
+  }
+}
+
+.name-actions-cont {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.material-icons {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.reset-btn {
+  position: relative;
+  margin-left: 10px;
+}
+
+.completed {
+  color: green;
+}
+
+.time-stamp-cont {
+  font-size: small;
+  display: flex;
+  flex-direction: column;
+}
+
+.total-completed {
+  margin-top: 30px;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+

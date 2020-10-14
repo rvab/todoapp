@@ -1,0 +1,129 @@
+<div class="app-comp">
+
+  <mat-card>
+
+    <div class="input-button-cont">
+
+      <div class="input-cont">
+
+        <mat-form-field appearance="fill">
+          <mat-label>What's on your mind?</mat-label>
+          <input matInput  [formControl]="todoForm" required #inputCont>
+          <mat-error *ngIf="todoForm.invalid">You cannot add empty task.</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="button-cont">
+        <button mat-raised-button color="primary" (click)="addTodoItem()">{{ !selectedTodo ? 'Add' : 'Edit'}}</button>
+        <button mat-stroked-button color="primary" class="reset-btn" (click)="resetInput()">Reset</button>
+      </div>  
+    
+    </div>  
+
+    <div class="empty-state" *ngIf="!todoItemList.length && !completedTask.length">
+      You don't have any pending task(s).
+    </div>
+    
+    <div class="empty-state" *ngIf="!todoItemList.length && completedTask.length">
+      Well Done!. You have completed all your task(s)
+    </div>
+
+    <mat-tab-group mat-align-tabs="start">
+      <mat-tab label="Todo ({{todoItemList.length}})"> 
+        <ng-container
+          *ngTemplateOutlet="todoCont">
+        </ng-container>  
+      </mat-tab>
+      <mat-tab label="Completed ({{completedTask.length}})">
+        <ng-container
+          *ngTemplateOutlet="completedCont">
+        </ng-container>
+      </mat-tab>
+    </mat-tab-group>
+
+    <ng-template class="todo-cont" #todoCont>
+
+      <div class="todo-list" cdkDropList [cdkDropListData]="todoItemList" (cdkDropListDropped)="drop($event)">  
+        <div *ngFor="let todo of todoItemList; let i = index" cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".todo-list">
+
+          <div class="single-todo" 
+            (mouseenter)="actionsCont.style.display ='block'; timesStampCont.style.display ='flex'"
+            (mouseleave)="actionsCont.style.display = 'none'; timesStampCont.style.display ='none'">
+
+            <div class="name-actions-cont">
+              <div class="name-cont">
+                {{ todo.name }}
+              </div>  
+
+              <div class="action-cont" #actionsCont>
+
+                <span class="material-icons" *ngIf="!todo.completed" (click)="openEditMode(todo, inputCont)">
+                  edit
+                </span>
+
+                <span class="material-icons" *ngIf="!todo.completed" (click)="markAsComplete(todo)">
+                  done
+                </span>
+
+                <span class="material-icons" (click)="deleteTodoItem(todo)">
+                  close
+                </span>
+
+              </div> 
+              
+            </div>  
+
+            <div class="time-stamp-cont" #timesStampCont>
+              <span class="create-ts">created at {{todo.createTs | date : 'dd-MM-yy, h:mm a'}}</span>
+              <span class="modified-ts" *ngIf="todo.modifiedTs"> modified at {{todo.modifiedTs | date : 'dd-MM-yy, h:mm a'}} </span>
+
+            </div>  
+            
+          </div>  
+          <mat-divider>
+          </mat-divider>  
+        </div>  
+      </div>
+    </ng-template>
+
+    <ng-template class="completed-cont" #completedCont>
+      
+      <div class="completed-list" cdkDropList [cdkDropListData]="completedTask" (cdkDropListDropped)="drop($event)">  
+        <div *ngFor="let todo of completedTask; let i = index" cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".completed-list" >
+
+          <div class="single-todo" 
+          (mouseenter)="actionsCont.style.display ='block'; timesStampCont.style.display ='flex'"
+          (mouseleave)="actionsCont.style.display = 'none'; timesStampCont.style.display ='none'">
+
+            <div class="name-actions-cont">
+              <div class="name-cont completed" >
+                {{ todo.name }}
+              </div>  
+
+              <div class="action-cont" #actionsCont>
+                <span class="material-icons" (click)="deleteCompletedItem(todo)">
+                  close
+                </span>
+
+              </div> 
+              
+            </div>  
+
+            <div class="time-stamp-cont" #timesStampCont>
+              <span class="create-ts">created at {{todo.createTs | date : 'dd-MM-yy, h:mm a'}}</span>
+              <span class="modified-ts" *ngIf="todo.modifiedTs"> completed at {{todo.modifiedTs | date : 'dd-MM-yy, h:mm a'}} </span>
+
+            </div>  
+            
+          </div>  
+          <mat-divider>
+          </mat-divider>  
+        </div>  
+      </div>
+    </ng-template>
+
+  </mat-card>  
+
+
+</div>  
